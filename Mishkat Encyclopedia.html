@@ -1,0 +1,905 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mishkat Encyclopedia</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: wiki shell. Sticky masthead with search and a diamond-lattice band (the one bold move), a sidebar of topics, and an article column with a floating infobox. */
+:root{
+  --paper:#f5f7f4;
+  --surface:#ffffff;
+  --ink:#14211e;
+  --muted:#566762;
+  --rule:#d3dcd7;
+  --panel:#e9f0ec;
+  --accent:#0a6a55;
+  --accent-soft:#d6ebe3;
+  --on-accent:#ffffff;
+  --display:'Amiri','Times New Roman',serif;
+  --body:'Source Serif 4',Georgia,serif;
+  --ui:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0d1614;--surface:#121e1b;--ink:#e2ebe7;--muted:#9fb2ab;--rule:#263833;--panel:#172622;--accent:#52c7a4;--accent-soft:#18352c;--on-accent:#08201a;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0d1614;--surface:#121e1b;--ink:#e2ebe7;--muted:#9fb2ab;--rule:#263833;--panel:#172622;--accent:#52c7a4;--accent-soft:#18352c;--on-accent:#08201a;color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font:1.0625rem/1.65 var(--body)}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{font:inherit;color:inherit}
+
+/* masthead */
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--rule)}
+.mast-in{max-width:76rem;margin-inline:auto;padding:.7rem 16px;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem}
+.band{display:block;width:100%;height:10px;color:var(--accent);opacity:.55}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--ink);margin-right:auto}
+.brand-ar{font:700 2.1rem/1 var(--display);color:var(--accent)}
+.brand-en{display:flex;flex-direction:column;font:600 1.05rem/1.1 var(--ui);letter-spacing:.01em}
+.brand-en small{font:500 .62rem/1.4 var(--ui);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.icon{display:inline-grid;place-items:center;width:2.4rem;height:2.4rem;border:1px solid var(--rule);background:var(--surface);border-radius:.4rem;cursor:pointer;color:var(--ink)}
+.icon:hover{background:var(--panel)}
+.icon svg{width:1.15rem;height:1.15rem;display:block}
+#menuBtn{display:none}
+.search{position:relative;flex:0 1 22rem;min-width:0}
+.search input{width:100%;font:400 .95rem var(--ui);padding:.55rem .8rem;border:1px solid var(--rule);border-radius:.4rem;background:var(--paper);color:var(--ink)}
+.search input::placeholder{color:var(--muted)}
+.results{position:absolute;left:0;right:0;top:calc(100% + .3rem);margin:0;padding:.25rem;list-style:none;background:var(--surface);border:1px solid var(--rule);border-radius:.5rem;box-shadow:0 .6rem 1.6rem rgba(0,0,0,.14);max-height:70vh;overflow:auto}
+.results a{display:block;padding:.5rem .65rem;text-decoration:none;color:var(--ink);border-radius:.3rem}
+.results a:hover,.results a:focus-visible{background:var(--panel)}
+.results b{font:700 1.15rem/1.2 var(--display);display:block}
+.results span{font:400 .8rem/1.4 var(--ui);color:var(--muted)}
+.results .none{padding:.6rem .65rem;font:400 .9rem var(--ui);color:var(--muted)}
+
+/* shell */
+.shell{max-width:76rem;margin-inline:auto;padding-inline:16px;padding-block:1.75rem 3rem;display:grid;grid-template-columns:14.5rem minmax(0,1fr);gap:2.5rem}
+.side{align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 5.6rem);font-family:var(--ui);font-size:.92rem}
+.side h2{font:600 .68rem/1.4 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 .5rem}
+.side ul{list-style:none;margin:0 0 1.5rem;padding:0;display:flex;flex-direction:column;gap:.1rem}
+.side a,.side button{display:flex;justify-content:space-between;gap:.5rem;width:100%;text-align:left;padding:.38rem .6rem;border:0;background:none;color:var(--ink);text-decoration:none;border-radius:.3rem;cursor:pointer;font:inherit}
+.side a:hover,.side button:hover{background:var(--panel)}
+.side a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.side em{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.side .note{font:400 .8rem/1.5 var(--ui);color:var(--muted);margin:0}
+
+.page{min-width:0;max-width:54rem}
+.crumb{font:400 .8rem var(--ui);color:var(--muted);margin:0 0 .6rem}
+.crumb a{color:var(--muted)}
+h1{font:700 clamp(2.1rem,5vw,3rem)/1.12 var(--display);margin:0 0 .15rem;text-wrap:balance}
+.ar{font:400 1.7rem/1.4 var(--display);color:var(--accent);margin:0 0 .3rem;text-align:left}
+.from{font:400 .82rem var(--ui);color:var(--muted);margin:0 0 1.2rem;padding-bottom:.9rem;border-bottom:1px solid var(--rule)}
+.page p{margin:0 0 1rem}
+.page h2{font:700 1.7rem/1.2 var(--display);margin:2.1rem 0 .7rem;padding-bottom:.25rem;border-bottom:1px solid var(--rule);text-wrap:balance}
+.page section{scroll-margin-top:6rem}
+
+.info{float:right;width:min(19rem,100%);margin:.2rem 0 1.2rem 1.6rem;background:var(--surface);border:1px solid var(--rule);font-family:var(--ui);font-size:.86rem;line-height:1.45}
+.info h2{font:700 1.2rem/1.2 var(--display);margin:0;padding:.7rem .9rem;background:var(--accent);color:var(--on-accent);border:0}
+.info dl{margin:0;padding:.3rem .9rem .5rem}
+.info dl>div{padding:.5rem 0;border-bottom:1px solid var(--rule)}
+.info dl>div:last-child{border-bottom:0}
+.info dt{font:600 .66rem/1.4 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.info dd{margin:.1rem 0 0}
+
+.toc{display:inline-block;max-width:100%;min-width:14rem;background:var(--surface);border:1px solid var(--rule);padding:.7rem 1rem .8rem;margin:.2rem 0 .6rem;font-family:var(--ui);font-size:.88rem}
+.toc b{display:block;font:600 .68rem var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.toc ol{margin:0;padding-left:1.2rem}
+.toc button{border:0;background:none;padding:.12rem 0;color:var(--accent);cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:.18em}
+
+.tablewrap{overflow-x:auto;margin:1rem 0 1.3rem;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font:400 .9rem/1.45 var(--ui)}
+th{font:600 .68rem/1.4 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--panel)}
+th,td{padding:.55rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.after{clear:both;margin-top:2.2rem}
+.after ul{margin:0 0 1rem;padding-left:1.2rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;font:400 .85rem var(--ui);align-items:center}
+.chips a{padding:.2rem .65rem;border:1px solid var(--rule);background:var(--surface);text-decoration:none;border-radius:2rem}
+
+/* main page */
+.lede{font-size:1.2rem;line-height:1.6;max-width:42rem}
+.two{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:1.6rem;margin:1.6rem 0 .5rem}
+.card{background:var(--surface);border:1px solid var(--rule);padding:1.1rem 1.3rem}
+.card h2,.card h3{margin-top:0}
+.label{font:600 .68rem/1.4 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 .5rem}
+.featured h3{font:700 1.7rem/1.2 var(--display);margin:0 0 .4rem}
+.today .gd{font:700 1.5rem/1.25 var(--display);margin:0}
+.today .hd{font:600 1.05rem var(--ui);color:var(--accent);margin:.25rem 0 .6rem}
+.today small{display:block;font:400 .78rem/1.5 var(--ui);color:var(--muted)}
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(13.5rem,1fr));gap:0 1.6rem;margin:0 0 1.5rem}
+.topics a{display:block;text-decoration:none;color:var(--ink);padding:.8rem 0;border-top:1px solid var(--rule)}
+.topics b{font:700 1.3rem/1.2 var(--display);color:var(--accent);display:block}
+.topics span{font:400 .84rem/1.4 var(--ui);color:var(--muted)}
+.list{list-style:none;padding:0;margin:0}
+.list li{padding:.8rem 0;border-top:1px solid var(--rule)}
+.list a{font:700 1.3rem/1.2 var(--display)}
+.list p{margin:.15rem 0 0;font:400 .92rem/1.5 var(--ui);color:var(--muted)}
+
+footer.site{max-width:76rem;margin-inline:auto;padding:1.4rem 16px 2.4rem;border-top:1px solid var(--rule);font:400 .8rem/1.6 var(--ui);color:var(--muted)}
+footer.site p{margin:0 0 .4rem;max-width:46rem}
+
+@media (max-width:820px){
+  #menuBtn{display:inline-grid}
+  .shell{grid-template-columns:minmax(0,1fr);gap:1rem}
+  .side{display:none;position:static;border-bottom:1px solid var(--rule);margin-bottom:.5rem}
+  .side.open{display:block}
+  .search{order:5;flex:1 1 100%}
+  .brand{margin-right:auto}
+  .two{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .info{float:none;width:100%;margin:0 0 1.2rem}
+  body{font-size:1rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <button id="menuBtn" class="icon" type="button" aria-label="Open topics menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a class="brand" href="#main" aria-label="Mishkat Encyclopedia, main page">
+      <span class="brand-ar" lang="ar">مشكاة</span>
+      <span class="brand-en">Mishkat<small>Encyclopedia</small></span>
+    </a>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search articles, e.g. Karbala" autocomplete="off" aria-label="Search articles" aria-controls="results">
+      <ul id="results" class="results" hidden></ul>
+    </div>
+    <button id="themeBtn" class="icon" type="button" aria-label="Switch light or dark theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+  <svg class="band" aria-hidden="true" focusable="false">
+    <defs><pattern id="lattice" width="16" height="10" patternUnits="userSpaceOnUse"><path d="M0 5 L8 0 L16 5 L8 10 Z" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs>
+    <rect width="100%" height="10" fill="url(#lattice)"/>
+  </svg>
+</header>
+
+<div class="shell">
+  <nav id="side" class="side" aria-label="Topics">
+    <h2>Explore</h2>
+    <ul>
+      <li><a href="#main" data-nav="main">Main page</a></li>
+      <li><a href="#all-articles" data-nav="all-articles">All articles</a></li>
+      <li><button id="rand" type="button">Random article</button></li>
+    </ul>
+    <h2>Topics</h2>
+    <ul id="catlist"></ul>
+    <p class="note">Dates follow the Hijri calendar (AH) with the Gregorian equivalent (CE).</p>
+  </nav>
+  <main id="page" class="page"></main>
+</div>
+
+<footer class="site">
+  <p>Mishkat is an independent educational project. Articles present the Twelver Shia tradition unless they say otherwise, and note Sunni views where the two differ.</p>
+  <p>Exact dates, especially of birth and death, vary between sources. Use the summaries here as a starting point and check scholarly references for study.</p>
+</footer>
+
+<script>
+const CATS = {
+  beliefs: "Beliefs and doctrine",
+  figures: "Figures",
+  events: "Events and history",
+  observances: "Observances",
+  texts: "Books and texts",
+  law: "Law and scholarship"
+};
+const CATDESC = {
+  beliefs: "Imamate, the occultation and the core ideas of the faith.",
+  figures: "The Ahl al-Bayt and the twelve Imams.",
+  events: "Ghadir Khumm and Karbala.",
+  observances: "Ashura and Arbaeen.",
+  texts: "Nahj al-Balagha, al-Kafi and the Thaqalayn tradition.",
+  law: "Ja'fari jurisprudence and the role of the jurist."
+};
+
+const A = {
+"shia-islam": {
+  title: "Shia Islam", ar: "الشيعة", cat: "beliefs",
+  aliases: ["Shiism", "Shi'ism", "Shia", "Shi'a", "Shiite", "Twelver"],
+  sum: "The second-largest branch of Islam, centered on the Imamate of Ali and the Ahl al-Bayt.",
+  info: [
+    ["Religion", "Islam"],
+    ["Defining belief", "[[imamate|The Imamate]] of Ali and his descendants"],
+    ["Largest branch", "Twelver (Ithna 'Ashari)"],
+    ["Other branches", "Ismaili, Zaidi"],
+    ["Share of Muslims", "Estimated at 10 to 15 percent"],
+    ["Major centers", "Najaf, Karbala, Qom, Mashhad"]
+  ],
+  lead: [
+    "Shia Islam is the second-largest branch of Islam. Its followers, the Shia, hold that after the Prophet Muhammad the leadership of the Muslim community belonged to [[imam-ali|Ali ibn Abi Talib]] and to a line of Imams from the Prophet's household, the [[ahl-al-bayt|Ahl al-Bayt]]. The word shia comes from shi'at Ali, meaning the party or followers of Ali.",
+    "Shia and Sunni Muslims share belief in one God, the Qur'an, the Prophet Muhammad, the Day of Judgement and the five daily prayers. They differ mainly on the question of succession and on the religious authority of the Imams."
+  ],
+  sections: [
+    {h: "Core beliefs", p: [
+      "Twelver Shia usually list five principles of religion: tawhid (the oneness of God), 'adl (divine justice), nubuwwa (prophethood), imama (the Imamate) and ma'ad (resurrection). Justice is treated as a principle in its own right, which shapes Shia theology on questions of human freedom and divine reward.",
+      "Belief in the [[imamate|Imamate]] is the feature that most clearly sets Shia Islam apart. The [[ghadir-khumm|event of Ghadir Khumm]] is the central Shia argument for the appointment of Ali."
+    ]},
+    {h: "Branches", p: [
+      "The Twelvers follow twelve Imams, the last of whom is in [[occultation|occultation]]. They are the large majority of Shia worldwide. Ismailis trace the Imamate through Isma'il ibn Ja'far and hold a different line of succession after Imam Ja'far al-Sadiq. Zaidis recognize Zayd ibn Ali, a grandson of Imam Hussain, as the fifth Imam, and their law is in many matters close to the Sunni schools."
+    ]},
+    {h: "Religious life", p: [
+      "Shia perform the daily prayers, fast in Ramadan, give zakat and go on Hajj. They also pay khums, a fifth of annual surplus income, and many pray with the forehead on a tablet of clay (turba) from Karbala or another place of earth. Believers follow a qualified living jurist, the marja', in matters of law; see [[jafari-fiqh|Ja'fari jurisprudence]].",
+      "Devotion to the Ahl al-Bayt is expressed through visits to shrines (ziyara), supplications and mourning gatherings, above all in Muharram. See [[ashura|Ashura]] and [[arbaeen|Arbaeen]]."
+    ]},
+    {h: "Where Shia live", p: [
+      "Shia form the majority in Iran, Iraq, Azerbaijan and Bahrain. Large communities live in Pakistan, India, Lebanon, Yemen (mostly Zaidi), Afghanistan, Saudi Arabia, Turkey and Nigeria, and in diaspora communities across Europe and North America."
+    ]}
+  ],
+  see: ["imamate", "ahl-al-bayt", "twelve-imams", "ghadir-khumm", "jafari-fiqh"]
+},
+
+"ahl-al-bayt": {
+  title: "Ahl al-Bayt", ar: "أهل البيت", cat: "figures",
+  aliases: ["People of the House", "Household of the Prophet", "Panjtan", "Ahl-e-Bait", "Ahlul Bayt"],
+  sum: "The Household of the Prophet Muhammad, whom Shia Muslims regard as guides after the Prophet.",
+  info: [
+    ["Meaning", "People of the House"],
+    ["Core members (Shia view)", "Muhammad, [[imam-ali|Ali]], [[fatima-al-zahra|Fatima]], [[imam-hasan|Hasan]], [[imam-hussain|Hussain]]"],
+    ["Continued by", "Nine Imams from the line of Hussain"],
+    ["Key texts", "Qur'an 33:33, [[hadith-al-thaqalayn|Hadith al-Thaqalayn]]"]
+  ],
+  lead: [
+    "Ahl al-Bayt means the People of the House. The term refers to the family of the Prophet Muhammad. In Shia usage it centers on the Prophet, Ali, Fatima, Hasan and Hussain, together with the nine Imams descended from Hussain, whom Shia regard as divinely guided and free from sin."
+  ],
+  sections: [
+    {h: "In the Qur'an and hadith", p: [
+      "The Verse of Purification (Qur'an 33:33) says that God wishes to keep impurity away from the Ahl al-Bayt and to purify them completely. Reports known as the Hadith al-Kisa describe the Prophet gathering Ali, Fatima, Hasan and Hussain under a cloak and applying the verse to them.",
+      "Muslims differ on who is meant. Many Sunni commentators include the wives of the Prophet, while Shia scholars generally restrict the verse to the five of the cloak."
+    ]},
+    {h: "Love and reverence", p: [
+      "Both Sunni and Shia Muslims send blessings on the Prophet and his family in the daily prayer. Shia understand the verse of affection (Qur'an 42:23), which speaks of love for the Prophet's near kin, as a call to love and follow the Ahl al-Bayt."
+    ]},
+    {h: "Religious authority", p: [
+      "For Shia, the Imams of the Ahl al-Bayt are the authoritative interpreters of the Qur'an and the Prophet's teaching. This view rests partly on the [[hadith-al-thaqalayn|Hadith al-Thaqalayn]], in which the Prophet links the Qur'an and his household."
+    ]}
+  ],
+  see: ["twelve-imams", "hadith-al-thaqalayn", "fatima-al-zahra"]
+},
+
+"imam-ali": {
+  title: "Imam Ali", ar: "علي بن أبي طالب", cat: "figures",
+  aliases: ["Ali ibn Abi Talib", "Amir al-Mu'minin", "Hazrat Ali", "Maula Ali", "Abu Turab"],
+  sum: "Cousin and son-in-law of the Prophet, first Imam for Shia and fourth caliph for Sunnis.",
+  info: [
+    ["Title", "Amir al-Mu'minin"],
+    ["Born", "13 Rajab, about 599 CE, Mecca"],
+    ["Parents", "Abu Talib and Fatima bint Asad"],
+    ["Spouse", "[[fatima-al-zahra|Fatima al-Zahra]]"],
+    ["Children", "[[imam-hasan|Hasan]], [[imam-hussain|Hussain]], Zaynab, Umm Kulthum and others"],
+    ["Died", "21 Ramadan 40 AH (661 CE), Kufa"],
+    ["Buried", "Najaf, Iraq"],
+    ["Role", "First Imam; fourth Rashidun caliph (656 to 661 CE)"]
+  ],
+  lead: [
+    "Ali ibn Abi Talib was the cousin and son-in-law of the Prophet Muhammad. Twelver and other Shia Muslims regard him as the first Imam and the rightful successor of the Prophet. Sunni Muslims honor him as the fourth of the Rashidun, the rightly guided caliphs."
+  ],
+  sections: [
+    {h: "Early life", p: [
+      "Ali grew up in the household of the Prophet and is counted among the first to accept Islam. Shia tradition places his birth inside the Kaaba. On the night of the Hijra he slept in the Prophet's bed so that the Prophet could leave Mecca safely, an event accepted by both Sunni and Shia sources.",
+      "He took part in the major battles of the Prophet's lifetime, including Badr, Uhud, the Trench and Khaybar, and he married [[fatima-al-zahra|Fatima]]."
+    ]},
+    {h: "Succession and caliphate", p: [
+      "Shia hold that the Prophet appointed Ali as his successor at [[ghadir-khumm|Ghadir Khumm]]. After the Prophet's death in 632 CE, Abu Bakr was chosen as caliph at the gathering of Saqifa. Ali became caliph in 656 CE after the killing of Uthman.",
+      "His rule was marked by civil conflict, notably the battles of the Camel (656), Siffin (657) and Nahrawan (658). He made Kufa his capital."
+    ]},
+    {h: "Death", p: [
+      "While praying in the mosque of Kufa on 19 Ramadan 40 AH, Ali was struck on the head with a poisoned sword by Abd al-Rahman ibn Muljam, a Kharijite. He died two days later and was buried in Najaf, where the Imam Ali Shrine stands. Shia mark the night of the nineteenth to the twenty-first of Ramadan with mourning."
+    ]},
+    {h: "Legacy", p: [
+      "His sermons, letters and sayings are collected in [[nahj-al-balagha|Nahj al-Balagha]]. Respect for his knowledge, courage and justice is shared across Muslim traditions, and he features in the spiritual lineages of many Sufi orders."
+    ]}
+  ],
+  see: ["ghadir-khumm", "nahj-al-balagha", "twelve-imams", "fatima-al-zahra"]
+},
+
+"fatima-al-zahra": {
+  title: "Fatima al-Zahra", ar: "فاطمة الزهراء", cat: "figures",
+  aliases: ["Fatima", "Fatimah", "Bibi Fatima", "Sayyida Fatima", "Fatima Zahra", "Zahra"],
+  sum: "Daughter of the Prophet Muhammad and Khadija, wife of Ali and mother of Hasan and Hussain.",
+  info: [
+    ["Titles", "al-Zahra, al-Siddiqa, Sayyidat Nisa' al-'Alamin"],
+    ["Parents", "Muhammad and Khadija"],
+    ["Spouse", "[[imam-ali|Ali ibn Abi Talib]]"],
+    ["Children", "[[imam-hasan|Hasan]], [[imam-hussain|Hussain]], Zaynab, Umm Kulthum"],
+    ["Died", "11 AH (632 CE), Medina"],
+    ["Burial", "Medina; the exact location is not known with certainty"]
+  ],
+  lead: [
+    "Fatima al-Zahra was the daughter of the Prophet Muhammad and his first wife, Khadija. She married Ali ibn Abi Talib and was the mother of Hasan, Hussain, Zaynab and Umm Kulthum. Shia Muslims count her among the five of the cloak and give her a position of great honor; her descendants through Hussain carry the line of the Imams."
+  ],
+  sections: [
+    {h: "Life", p: [
+      "Fatima was born in Mecca and moved to Medina after the Hijra. Her marriage to Ali is remembered for its simplicity. Many Muslims, Sunni and Shia, know the supplication called the Tasbih of Fatima, which is recited after prayer: Allahu akbar thirty-four times, alhamdu lillah thirty-three times and subhan Allah thirty-three times.",
+      "A saying of the Prophet that Fatima is a part of him is recorded in both Sunni and Shia collections."
+    ]},
+    {h: "After the Prophet's death", p: [
+      "Fatima died within months of her father. The exact date is reported differently, and Shia commemorations fall in Jumada al-Awwal or Jumada al-Thani depending on the tradition followed. Sources report a dispute with Abu Bakr over the garden of Fadak, and a sermon she gave in the mosque of Medina on the matter. Sunni and Shia authors interpret the dispute differently.",
+      "Shia tradition holds that she was buried at night, and her grave site is not publicly known."
+    ]},
+    {h: "Observances", p: [
+      "Her birthday, commonly marked on 20 Jumada al-Thani, is celebrated in Iran as Women's Day and Mother's Day. Shia women's gatherings often take her as the model of devotion and patience."
+    ]}
+  ],
+  see: ["ahl-al-bayt", "imam-ali", "imam-hussain"]
+},
+
+"imam-hasan": {
+  title: "Imam Hasan", ar: "الحسن بن علي", cat: "figures",
+  aliases: ["Hasan ibn Ali", "al-Mujtaba", "Hasan Mujtaba", "Imam Hassan"],
+  sum: "The second Imam, eldest son of Ali and Fatima, known for his peace treaty with Mu'awiya.",
+  info: [
+    ["Title", "al-Mujtaba"],
+    ["Born", "15 Ramadan 3 AH, Medina"],
+    ["Parents", "[[imam-ali|Ali]] and [[fatima-al-zahra|Fatima]]"],
+    ["Died", "About 50 AH (670 CE), Medina"],
+    ["Buried", "Jannat al-Baqi, Medina"],
+    ["Role", "Second Imam"]
+  ],
+  lead: [
+    "Hasan ibn Ali was the elder grandson of the Prophet Muhammad and the second Imam in Twelver belief. He is remembered for his generosity, his patience and the peace agreement he made with Mu'awiya ibn Abi Sufyan."
+  ],
+  sections: [
+    {h: "Caliphate and treaty", p: [
+      "After the death of his father in 661 CE, people of Kufa pledged allegiance to Hasan. Mu'awiya, the governor of Syria, marched against him. Hasan's forces were divided and some of his commanders were in secret contact with the enemy. In 41 AH he agreed to a treaty that handed rule to Mu'awiya under stated conditions, among them that the community would choose a successor after Mu'awiya.",
+      "Shia scholars see the treaty as a step taken to protect Muslim lives and the small community of the Prophet's followers when open fighting would have destroyed it."
+    ]},
+    {h: "Death", p: [
+      "Shia tradition and a number of historians report that Hasan was poisoned in Medina. He was buried in the cemetery of Jannat al-Baqi. The shrines there were demolished in 1925 and 1926, and Shia remember this on 8 Shawwal."
+    ]}
+  ],
+  see: ["imam-hussain", "imam-ali", "twelve-imams"]
+},
+
+"imam-hussain": {
+  title: "Imam Hussain", ar: "الحسين بن علي", cat: "figures",
+  aliases: ["Hussain ibn Ali", "Husayn", "Hussein", "Sayyid al-Shuhada", "Abu Abdillah", "Imam Husain"],
+  sum: "The third Imam, grandson of the Prophet, killed at Karbala in 61 AH.",
+  info: [
+    ["Titles", "Sayyid al-Shuhada, Abu Abdillah"],
+    ["Born", "3 Sha'ban 4 AH (626 CE), Medina"],
+    ["Parents", "[[imam-ali|Ali]] and [[fatima-al-zahra|Fatima]]"],
+    ["Children", "Ali Zayn al-Abidin, Ali al-Akbar, Sakina, Fatima, Ali al-Asghar"],
+    ["Died", "10 Muharram 61 AH (10 October 680 CE), Karbala"],
+    ["Buried", "Karbala, Iraq"],
+    ["Role", "Third Imam"]
+  ],
+  lead: [
+    "Hussain ibn Ali was the younger grandson of the Prophet Muhammad and the third Imam. He refused to give allegiance to the Umayyad ruler Yazid and was killed with his family and companions at [[battle-of-karbala|Karbala]]. Muslims of many schools honor him, and for Shia his sacrifice is the central event of the religious year."
+  ],
+  sections: [
+    {h: "Early life", p: [
+      "Hussain was raised in the house of the Prophet, who is reported in both Sunni and Shia collections to have called Hasan and Hussain the leaders of the youth of Paradise. After the death of Hasan, Hussain became the Imam."
+    ]},
+    {h: "Stand against Yazid", p: [
+      "When Mu'awiya died in 60 AH and his son Yazid demanded allegiance, Hussain refused. He left Medina for Mecca and then set out for Iraq after receiving many letters of invitation from Kufa. He said that he rose to reform the community of his grandfather and to call to what is right and forbid what is wrong."
+    ]},
+    {h: "Legacy", p: [
+      "Hussain is a symbol of resistance to oppression and of loyalty to principle at great cost. His shrine in Karbala is among the most visited places of pilgrimage in the Muslim world, and the pilgrimage of [[arbaeen|Arbaeen]] gathers millions each year. The mourning rites of Muharram are described in [[ashura|Ashura]]."
+    ]}
+  ],
+  see: ["battle-of-karbala", "ashura", "arbaeen", "imam-hasan"]
+},
+
+"battle-of-karbala": {
+  title: "Battle of Karbala", ar: "واقعة كربلاء", cat: "events",
+  aliases: ["Karbala", "Karbala 61 AH", "Tragedy of Karbala", "Waqia Karbala", "Kerbala"],
+  sum: "The battle of 10 Muharram 61 AH in which Imam Hussain and his companions were killed by the Umayyad army.",
+  info: [
+    ["Date", "10 Muharram 61 AH (10 October 680 CE)"],
+    ["Place", "Karbala, near the Euphrates, Iraq"],
+    ["Sides", "Hussain, his family and companions against the army of Yazid I"],
+    ["Commanders", "[[imam-hussain|Hussain]] and Abbas ibn Ali; Umar ibn Sa'd for the Umayyads"],
+    ["Result", "Hussain and his male companions killed; women and children taken captive"]
+  ],
+  lead: [
+    "The Battle of Karbala took place on 10 Muharram 61 AH. A small group of family members and companions led by [[imam-hussain|Imam Hussain]] was surrounded and killed by an army of the Umayyad caliph Yazid I. It is remembered by Shia Muslims as the greatest tragedy in their history and is commemorated each year as [[ashura|Ashura]]."
+  ],
+  sections: [
+    {h: "Background", p: [
+      "Yazid took power in Rajab 60 AH and asked Hussain for allegiance. Hussain refused and traveled from Medina to Mecca. Letters from the people of Kufa urged him to come and lead them, and he sent his cousin Muslim ibn Aqil ahead as envoy. Ubayd Allah ibn Ziyad, the new governor, took control of Kufa and killed Muslim ibn Aqil, and the support of the city collapsed."
+    ]},
+    {h: "The road to Karbala", p: [
+      "Hussain left Mecca on 8 Dhu al-Hijja with his family and companions. Near Karbala his group was stopped by a cavalry unit under al-Hurr ibn Yazid al-Riyahi. He camped at Karbala on 2 Muharram, as the army of Umar ibn Sa'd grew to several thousand. From 7 Muharram the camp was cut off from the water of the Euphrates."
+    ]},
+    {h: "The day of Ashura", p: [
+      "On the morning of 10 Muharram the companions of Hussain fought and fell in turn. Al-Hurr crossed from the enemy side to join Hussain and was killed. Abbas ibn Ali, the standard-bearer, was killed trying to bring water to the children of the camp. Ali al-Akbar, Qasim ibn Hasan and the infant Ali al-Asghar were also killed, and Hussain fell last. Tradition counts seventy-two men on his side, though sources differ."
+    ]},
+    {h: "Aftermath", p: [
+      "The tents were burned and the survivors, led by Zaynab bint Ali and including the ill Ali Zayn al-Abidin, were taken as captives to Kufa and then to Damascus. Zaynab's speeches in Kufa and in the court of Yazid are remembered as a defense of the cause of Hussain.",
+      "The killing turned many against the Umayyads. It was followed by the movement of the Penitents (Tawwabun) in 65 AH and the revolt of al-Mukhtar al-Thaqafi in 66 AH."
+    ]}
+  ],
+  see: ["imam-hussain", "ashura", "arbaeen"]
+},
+
+"ashura": {
+  title: "Ashura", ar: "عاشوراء", cat: "observances",
+  aliases: ["Muharram", "Day of Ashura", "Youm-e-Ashur", "Majlis", "Shaam-e-Ghariban", "Azadari", "Matam"],
+  sum: "The tenth of Muharram, the day Shia mourn the martyrdom of Imam Hussain at Karbala.",
+  info: [
+    ["Date", "10 Muharram"],
+    ["Commemorates", "[[battle-of-karbala|The Battle of Karbala]]"],
+    ["Observed by", "Shia worldwide; many Sunnis fast on the day"],
+    ["Practices", "Majalis, processions, recitation, charity food"]
+  ],
+  lead: [
+    "Ashura is the tenth day of Muharram, the first month of the Islamic calendar. For Shia Muslims it is a day of mourning for [[imam-hussain|Imam Hussain]] and his companions, killed at [[battle-of-karbala|Karbala]] in 61 AH. Many Sunni Muslims also observe the day, usually by fasting, in remembrance of the deliverance of Moses from Pharaoh."
+  ],
+  sections: [
+    {h: "Majalis", p: [
+      "Mourning gatherings called majalis are held through the first ten nights of Muharram, in mosques, imambargahs and homes. A speaker recounts the events of Karbala and the teaching of the Ahl al-Bayt, and the gathering closes with elegies (marthiya and noha) and matam, rhythmic beating of the chest."
+    ]},
+    {h: "Processions and symbols", p: [
+      "On the ninth and tenth, mourners walk in processions carrying standards (alam) in memory of Abbas ibn Ali, a riderless decorated horse (zuljanah) and, in South Asia, tazias, replicas of the shrine of Hussain. The evening after Ashura is observed as Shaam-e-Ghariban, the evening of the bereaved, when the survivors of Karbala were left without protectors."
+    ]},
+    {h: "Charity", p: [
+      "Food and drink are distributed free as nazr or niyaz. Water stalls (sabil) recall the thirst of Hussain's camp, and many communities organize blood donation drives in his name."
+    ]},
+    {h: "Differences in practice", p: [
+      "Scholars differ on certain practices. Self-inflicted bleeding with blades (tatbir) is rejected by a number of senior jurists, who encourage donating blood instead. Mourning customs vary between Iraq, Iran, Pakistan, India, Lebanon and the Gulf."
+    ]}
+  ],
+  see: ["battle-of-karbala", "imam-hussain", "arbaeen"]
+},
+
+"arbaeen": {
+  title: "Arbaeen", ar: "الأربعين", cat: "observances",
+  aliases: ["Chehlum", "Arba'in", "Arbain", "Karbala pilgrimage", "Chehlum Imam Hussain"],
+  sum: "The 20th of Safar, forty days after Ashura, marked by a mass pilgrimage to Karbala.",
+  info: [
+    ["Date", "20 Safar"],
+    ["Meaning", "Forty (Arabic: arba'in)"],
+    ["Place", "Karbala, Iraq"],
+    ["Marks", "The end of forty days of mourning after [[ashura|Ashura]]"]
+  ],
+  lead: [
+    "Arbaeen falls on 20 Safar, forty days after Ashura. It marks the end of the mourning period for [[imam-hussain|Imam Hussain]] and his companions. Each year millions of pilgrims travel to Karbala, making it one of the largest annual gatherings in the world. In South Asia the day is known as Chehlum."
+  ],
+  sections: [
+    {h: "Origins", p: [
+      "A widely reported Shia tradition holds that Jabir ibn Abd Allah al-Ansari, a companion of the Prophet, visited the grave of Hussain on the first Arbaeen. Some historians question the details of this account, and sources differ on when the family of Hussain returned to Karbala."
+    ]},
+    {h: "The pilgrimage", p: [
+      "Many pilgrims walk the roughly eighty kilometers from Najaf to Karbala, which takes about three days. Along the route, roadside stations (mawkib) offer free food, tea, rest and medical care, funded by Iraqi families and groups from abroad. Pilgrims come from Iraq, Iran, Pakistan, India, Lebanon, the Gulf, Africa, Europe and North America."
+    ]},
+    {h: "Ziyarat Arbaeen", p: [
+      "A special text of visitation attributed to Imam Ja'far al-Sadiq is recited at the shrine of Hussain on this day."
+    ]}
+  ],
+  see: ["ashura", "imam-hussain", "battle-of-karbala"]
+},
+
+"ghadir-khumm": {
+  title: "Event of Ghadir Khumm", ar: "غدير خم", cat: "events",
+  aliases: ["Ghadir", "Eid al-Ghadir", "Eid-e-Ghadeer", "Ghadeer", "Mawla hadith", "Hadith of Ghadir", "Man kuntu mawla"],
+  sum: "The gathering in 10 AH where the Prophet declared Ali his mawla, understood by Shia as appointing him successor.",
+  info: [
+    ["Date", "18 Dhu al-Hijja 10 AH (March 632 CE)"],
+    ["Place", "Ghadir Khumm, on the road between Mecca and Medina"],
+    ["Occasion", "Return from the Farewell Pilgrimage"],
+    ["Key statement", "“Whoever's mawla I am, Ali is his mawla”"],
+    ["Observance", "Eid al-Ghadir"]
+  ],
+  lead: [
+    "Ghadir Khumm is a pond-side halt on the road between Mecca and Medina where the Prophet Muhammad addressed the pilgrims returning from his Farewell Pilgrimage in the year 10 AH. Raising the hand of [[imam-ali|Ali]], he said that whoever had him as mawla had Ali as mawla. Shia take this as the appointment of Ali as his successor."
+  ],
+  sections: [
+    {h: "The event", p: [
+      "According to the reports, the Prophet stopped the large caravan at Ghadir Khumm in the heat of the day, had a platform made of saddles, delivered a sermon and then raised the hand of Ali. The saying is recorded in many Sunni and Shia sources, including the Musnad of Ahmad ibn Hanbal and the Sunan of al-Tirmidhi."
+    ]},
+    {h: "Interpretation", p: [
+      "Shia scholars understand mawla here as master and holder of authority, and read the sermon as the public designation of the first Imam. Many Sunni scholars understand mawla as friend or supporter, and see the sermon as an expression of Ali's standing rather than a transfer of rule.",
+      "Shia reports connect the verse that begins “Today I have perfected your religion for you” (Qur'an 5:3) with this occasion. Sunni sources generally place its revelation at Arafat."
+    ]},
+    {h: "Eid al-Ghadir", p: [
+      "Shia celebrate 18 Dhu al-Hijja as Eid al-Ghadir, one of their greatest festivals. People wear new clothes, gather for prayers and sermons, exchange gifts and feed the poor."
+    ]}
+  ],
+  see: ["imamate", "imam-ali", "hadith-al-thaqalayn"]
+},
+
+"imamate": {
+  title: "Imamate", ar: "الإمامة", cat: "beliefs",
+  aliases: ["Imama", "Imam", "Divine leadership", "Caliphate", "Khilafat", "Wilayat al-faqih", "Isma", "Infallibility"],
+  sum: "The Shia doctrine of divinely appointed leadership of the Muslim community after the Prophet.",
+  info: [
+    ["Arabic", "Imama"],
+    ["Holder", "The Imam"],
+    ["Number (Twelver)", "[[twelve-imams|Twelve]]"],
+    ["Contrasted with", "The Sunni caliphate"]
+  ],
+  lead: [
+    "In Shia theology the Imamate is the divinely appointed leadership of the Muslim community after the Prophet Muhammad, covering both religious guidance and, when conditions allow, political rule. Twelver Shia count it among the principles of religion."
+  ],
+  sections: [
+    {h: "Designation", p: [
+      "Shia hold that each Imam is designated (nass) by God through the Prophet or the previous Imam, and is not chosen by election or consultation. The first Imam, [[imam-ali|Ali]], is believed to have been named at [[ghadir-khumm|Ghadir Khumm]] and on other occasions."
+    ]},
+    {h: "Qualities", p: [
+      "Twelver Shia believe that the Imam is free from sin and error ('isma), is the most knowledgeable person of his time and is the model for believers. The Imam is not a prophet and receives no new revelation. His role is to guard and explain the religion brought by the Prophet."
+    ]},
+    {h: "The Sunni view", p: [
+      "Sunni Muslims hold that the community or a council of its leaders chooses the caliph, who is a political and religious leader without the claim to infallibility. This difference over succession is the historical origin of the division between the two main branches."
+    ]},
+    {h: "During the occultation", p: [
+      "Since the twelfth Imam is in [[occultation|occultation]], Twelver Shia look to qualified jurists for guidance. Some, following the doctrine of wilayat al-faqih articulated in the twentieth century by Ruhollah Khomeini, hold that a jurist should also hold political authority. Other Shia scholars do not accept this theory."
+    ]}
+  ],
+  see: ["twelve-imams", "occultation", "ghadir-khumm", "shia-islam"]
+},
+
+"twelve-imams": {
+  title: "The Twelve Imams", ar: "الأئمة الاثنا عشر", cat: "figures",
+  aliases: ["Twelve Imams", "Ithna Ashari", "Twelvers", "12 Imams", "Ayimma"],
+  sum: "The twelve successors of the Prophet recognized by Twelver Shia, from Ali to al-Mahdi.",
+  info: [
+    ["First Imam", "[[imam-ali|Ali ibn Abi Talib]]"],
+    ["Third Imam", "[[imam-hussain|Hussain ibn Ali]]"],
+    ["Twelfth Imam", "Muhammad al-Mahdi, in [[occultation|occultation]]"],
+    ["Followed by", "Twelver (Imami) Shia"]
+  ],
+  lead: [
+    "Twelver Shia believe that twelve Imams, all from the Ahl al-Bayt, succeeded the Prophet Muhammad as guides of the community. The first was [[imam-ali|Ali ibn Abi Talib]] and the last, Muhammad al-Mahdi, is believed to be alive in [[occultation|occultation]]. Twelver tradition holds that the other eleven were martyred, by sword or poison."
+  ],
+  sections: [
+    {h: "The Imams", table: {
+      head: ["#", "Imam", "Known as", "Passed", "Resting place"],
+      rows: [
+        ["1", "[[imam-ali|Ali ibn Abi Talib]]", "Amir al-Mu'minin", "40 AH / 661 CE", "Najaf"],
+        ["2", "[[imam-hasan|Hasan ibn Ali]]", "al-Mujtaba", "About 50 AH / 670 CE", "Medina (Baqi)"],
+        ["3", "[[imam-hussain|Hussain ibn Ali]]", "Sayyid al-Shuhada", "61 AH / 680 CE", "Karbala"],
+        ["4", "Ali ibn Hussain", "Zayn al-Abidin, al-Sajjad", "About 95 AH / 713 CE", "Medina (Baqi)"],
+        ["5", "Muhammad ibn Ali", "al-Baqir", "About 114 AH / 732 CE", "Medina (Baqi)"],
+        ["6", "Ja'far ibn Muhammad", "al-Sadiq", "148 AH / 765 CE", "Medina (Baqi)"],
+        ["7", "Musa ibn Ja'far", "al-Kazim", "183 AH / 799 CE", "Kazimiyya, Baghdad"],
+        ["8", "Ali ibn Musa", "al-Ridha", "203 AH / 818 CE", "Mashhad"],
+        ["9", "Muhammad ibn Ali", "al-Jawad, al-Taqi", "220 AH / 835 CE", "Kazimiyya, Baghdad"],
+        ["10", "Ali ibn Muhammad", "al-Hadi, al-Naqi", "254 AH / 868 CE", "Samarra"],
+        ["11", "Hasan ibn Ali", "al-Askari", "260 AH / 874 CE", "Samarra"],
+        ["12", "Muhammad ibn Hasan", "al-Mahdi, al-Hujja", "In occultation", "Not applicable"]
+      ]
+    }},
+    {h: "Succession", p: [
+      "In Twelver belief each Imam was appointed by the one before him, and the line passed from father to son after Hasan and Hussain, who were brothers. Imams Muhammad al-Baqir and Ja'far al-Sadiq are credited with spreading religious learning in a period when the Umayyad state was weakening, and their teachings are the base of [[jafari-fiqh|Ja'fari jurisprudence]]."
+    ]},
+    {h: "Shrines", p: [
+      "The tombs of the Imams are major places of pilgrimage: Najaf, Karbala, Kazimiyya in Baghdad, Samarra, Mashhad and the cemetery of Baqi in Medina. The Askari shrine in Samarra was badly damaged by a bombing in 2006 and rebuilt."
+    ]}
+  ],
+  see: ["imamate", "occultation", "ahl-al-bayt", "jafari-fiqh"]
+},
+
+"occultation": {
+  title: "Occultation", ar: "الغيبة", cat: "beliefs",
+  aliases: ["Ghayba", "Ghaybat", "Imam Mahdi", "Mahdi", "al-Qa'im", "Sahib al-Zaman", "Hidden Imam", "Twelfth Imam", "Imam Zamana"],
+  sum: "The Twelver belief that the twelfth Imam, al-Mahdi, lives hidden and will return to establish justice.",
+  info: [
+    ["Arabic", "Ghayba"],
+    ["Minor occultation", "260 to 329 AH (874 to 941 CE)"],
+    ["Major occultation", "From 329 AH (941 CE)"],
+    ["Imam", "Muhammad al-Mahdi, the twelfth Imam"],
+    ["Titles", "Sahib al-Zaman, al-Qa'im, al-Hujja"]
+  ],
+  lead: [
+    "In Twelver belief the twelfth Imam, Muhammad al-Mahdi, was born in 255 AH (869 CE) to [[twelve-imams|Imam Hasan al-Askari]] and by divine will has been hidden from public view since the 870s. Shia expect him to reappear and fill the earth with justice after it has been filled with injustice."
+  ],
+  sections: [
+    {h: "The minor occultation", p: [
+      "After the death of Imam al-Askari in 260 AH, Shia believe the Imam communicated with his followers through four successive deputies: Uthman ibn Sa'id al-Amri, Muhammad ibn Uthman, al-Husayn ibn Ruh al-Nawbakhti and Ali ibn Muhammad al-Samarri. Through them letters and questions passed between the community and the Imam."
+    ]},
+    {h: "The major occultation", p: [
+      "When the fourth deputy died in 329 AH, a letter attributed to the Imam is reported to have said that no one should claim to be his deputy and that the full occultation had begun. During this period, Twelver Shia look to qualified jurists for guidance. See [[imamate|Imamate]]."
+    ]},
+    {h: "Expectation and practice", p: [
+      "Waiting (intizar) for the Imam's return is treated as an act of faith that includes living with patience and working for justice. Belief in a Mahdi also exists in Sunni tradition, though most Sunnis expect him to be born in the future. Shia celebrate his birth on 15 Sha'ban, and many recite Dua Nudba on Friday mornings and visit the Jamkaran mosque near Qom."
+    ]}
+  ],
+  see: ["twelve-imams", "imamate", "shia-islam"]
+},
+
+"nahj-al-balagha": {
+  title: "Nahj al-Balagha", ar: "نهج البلاغة", cat: "texts",
+  aliases: ["Peak of Eloquence", "Nahjul Balagha", "Sermons of Ali", "Sharif al-Radi", "Malik al-Ashtar"],
+  sum: "A collection of sermons, letters and sayings of Imam Ali, compiled by al-Sharif al-Radi.",
+  info: [
+    ["Meaning", "The Peak of Eloquence"],
+    ["Compiled by", "al-Sharif al-Radi (d. 406 AH / 1015 CE)"],
+    ["Date", "About 400 AH (1010 CE)"],
+    ["Contents", "Sermons, letters and short sayings of [[imam-ali|Ali]]"],
+    ["Language", "Arabic"]
+  ],
+  lead: [
+    "Nahj al-Balagha, the Peak of Eloquence, is a collection of sermons, letters and short sayings attributed to [[imam-ali|Imam Ali]]. It was compiled around 400 AH by al-Sharif al-Radi, a Baghdad scholar and poet, who chose passages for their eloquence. It is among the most widely read books in Shia Islam and has also been read and commented on by Sunni scholars."
+  ],
+  sections: [
+    {h: "Contents", p: [
+      "The book has three parts: sermons, letters and wise sayings. Common editions contain roughly 240 sermons, nearly eighty letters and about 480 short sayings. Well-known passages include the long letter of instruction to al-Ashtar al-Nakha'i when he was appointed governor of Egypt, which sets out duties of justice, mercy and consultation, and sermons on God, the world and human conduct."
+    ]},
+    {h: "Commentaries and translations", p: [
+      "Many commentaries exist. Ibn Abi al-Hadid, a Mu'tazili scholar who died in 656 AH, wrote a large one, and the Egyptian reformer Muhammad Abduh produced an edition with notes in the late nineteenth century. The book has been translated into Persian, Urdu, English and many other languages."
+    ]},
+    {h: "Authenticity", p: [
+      "Some scholars have questioned whether certain passages go back to Ali. Shia scholars answer that most of the content appears in earlier sources, and modern studies of its sources have traced many passages to books older than al-Radi."
+    ]}
+  ],
+  see: ["imam-ali", "al-kafi", "hadith-al-thaqalayn"]
+},
+
+"al-kafi": {
+  title: "Al-Kafi", ar: "الكافي", cat: "texts",
+  aliases: ["Usul al-Kafi", "Kulayni", "Four Books", "Kutub al-Arba'a", "al-Kulayni", "Furu al-Kafi"],
+  sum: "The earliest and most important of the Four Books of Twelver hadith, compiled by al-Kulayni.",
+  info: [
+    ["Author", "Muhammad ibn Ya'qub al-Kulayni (d. 329 AH / 941 CE)"],
+    ["Language", "Arabic"],
+    ["Parts", "Usul, Furu' and Rawda"],
+    ["Hadiths", "About sixteen thousand"],
+    ["Status", "First of the Four Books"]
+  ],
+  lead: [
+    "Al-Kafi is a collection of hadith compiled by Muhammad ibn Ya'qub al-Kulayni, who died in Baghdad in 329 AH. It is the oldest and the most widely studied of the Four Books, the main hadith collections of Twelver Shia Islam. It gathers sayings and teachings of the Prophet and the Imams of the Ahl al-Bayt."
+  ],
+  sections: [
+    {h: "Structure", p: [
+      "Al-Kafi has three parts. Usul al-Kafi deals with belief, knowledge, reason and the Imamate. Furu' al-Kafi covers matters of law such as prayer, fasting, marriage and inheritance. Rawdat al-Kafi contains letters, sermons and historical reports. It holds about sixteen thousand reports, with a chain of narrators for each."
+    ]},
+    {h: "The Four Books", p: [
+      "The Four Books are al-Kafi, Man la yahduruhu al-faqih by Ibn Babawayh al-Saduq (d. 381 AH), and Tahdhib al-Ahkam and al-Istibsar by Shaykh al-Tusi (d. 460 AH). They are the basic sources of [[jafari-fiqh|Ja'fari jurisprudence]]."
+    ]},
+    {h: "Status", p: [
+      "Twelver scholars hold al-Kafi in great respect but do not treat every report in it as authentic. Scholars of the Usuli school examine the chain and content of each report. Muhammad Baqir al-Majlisi (d. 1110 AH) wrote Mir'at al-'Uqul, a commentary that grades its reports."
+    ]}
+  ],
+  see: ["jafari-fiqh", "nahj-al-balagha", "twelve-imams"]
+},
+
+"hadith-al-thaqalayn": {
+  title: "Hadith al-Thaqalayn", ar: "حديث الثقلين", cat: "texts",
+  aliases: ["Thaqalayn", "Two Weighty Things", "Hadith of the Two Weighty Things", "Itra", "Book and Itrat"],
+  sum: "The saying in which the Prophet links the Qur'an and his household as guides for the community.",
+  info: [
+    ["Meaning", "Tradition of the Two Weighty Things"],
+    ["Subject", "The Qur'an and the Ahl al-Bayt"],
+    ["Reported in", "Shia and Sunni collections"],
+    ["Occasion", "Often linked to the Farewell Pilgrimage and [[ghadir-khumm|Ghadir Khumm]]"]
+  ],
+  lead: [
+    "The Hadith al-Thaqalayn is a saying of the Prophet Muhammad in which he says that he is leaving behind two weighty things, the Book of God and his 'itra, the [[ahl-al-bayt|Ahl al-Bayt]]. He said that if the community held fast to both it would not go astray, and that the two would not separate until they met him at the Pond of Kawthar."
+  ],
+  sections: [
+    {h: "Sources", p: [
+      "Versions of the saying are recorded in Sahih Muslim, the Sunan of al-Tirmidhi and the Musnad of Ahmad ibn Hanbal, as well as in the Shia collections. Scholars of both traditions have written studies of its chains of narration. A different wording, the Book of God and my Sunna, appears in other Sunni sources."
+    ]},
+    {h: "Interpretation", p: [
+      "Shia scholars take the hadith as proof that the Imams of the Ahl al-Bayt are the authoritative interpreters of the Qur'an, and that the two guides can never disagree. Many Sunni scholars read it as a call to love, honor and learn from the Prophet's family."
+    ]}
+  ],
+  see: ["ahl-al-bayt", "ghadir-khumm", "imamate"]
+},
+
+"jafari-fiqh": {
+  title: "Ja'fari jurisprudence", ar: "الفقه الجعفري", cat: "law",
+  aliases: ["Jafari fiqh", "Ja'fari school", "Fiqh", "Marja", "Marja' al-taqlid", "Taqlid", "Ijtihad", "Usuli", "Akhbari", "Khums", "Hawza"],
+  sum: "The legal school of Twelver Shia, named after Imam Ja'far al-Sadiq, based on ijtihad and following a living marja'.",
+  info: [
+    ["School", "Twelver Shia (Ja'fari)"],
+    ["Named after", "Ja'far al-Sadiq, the sixth Imam"],
+    ["Sources", "Qur'an, Sunna, consensus, reason"],
+    ["Method", "Ijtihad"],
+    ["Centers of learning", "Najaf, Qom"]
+  ],
+  lead: [
+    "Ja'fari jurisprudence is the legal school followed by Twelver Shia. It is named after Imam Ja'far al-Sadiq, the sixth Imam (d. 148 AH / 765 CE), who taught a large circle of students in Medina and whose rulings on prayer, purity, trade and family law are the base of the school."
+  ],
+  sections: [
+    {h: "Sources of law", p: [
+      "The sources are the Qur'an, the Sunna (which for Twelvers includes traditions from the Imams as well as the Prophet), consensus (ijma') and reason ('aql). Collections such as [[al-kafi|al-Kafi]] carry the traditions used by jurists."
+    ]},
+    {h: "Ijtihad and the marja'", p: [
+      "A jurist who has trained to derive rulings from the sources by ijtihad is called a mujtahid. Lay believers follow (taqlid) a qualified living mujtahid, the marja' al-taqlid, whose book of rulings guides their practice, and they pay khums, a fifth of annual surplus income, which is passed to or directed by the marja'. Training takes place in the seminaries (hawza) of Najaf, Qom and elsewhere.",
+      "The Usuli school, which supports ijtihad and following a living jurist, has been dominant among Twelvers since the eighteenth century. The Akhbari school, which gave greater weight to hadith reports directly, now has few followers."
+    ]},
+    {h: "Distinct rulings and recognition", p: [
+      "Ja'fari law differs from the four Sunni schools on some matters, among them rules of inheritance, the acceptance of temporary marriage (mut'a), and the permission to combine certain prayers. In 1959 Mahmud Shaltut, then Shaykh of al-Azhar, issued a fatwa that worship according to the Ja'fari school is valid, alongside the Sunni schools."
+    ]}
+  ],
+  see: ["al-kafi", "twelve-imams", "shia-islam"]
+}
+};
+
+const DATES = [
+  ["1 Muharram", "Start of the Islamic year"],
+  ["10 Muharram", "[[ashura|Ashura]], martyrdom of Imam Hussain"],
+  ["20 Safar", "[[arbaeen|Arbaeen]]"],
+  ["28 Safar", "Passing of the Prophet and of Imam Hasan, in Shia tradition"],
+  ["17 Rabi' al-Awwal", "Birth of the Prophet, in Shia tradition (many Sunnis observe the 12th)"],
+  ["13 Rajab", "Birth of [[imam-ali|Imam Ali]]"],
+  ["15 Sha'ban", "Birth of Imam [[occultation|al-Mahdi]]"],
+  ["19 to 21 Ramadan", "Wounding and martyrdom of Imam Ali"],
+  ["18 Dhu al-Hijja", "Eid al-Ghadir, [[ghadir-khumm|Ghadir Khumm]]"]
+];
+
+const slugs = Object.keys(A);
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const md = s => esc(s).replace(/\[\[([a-z0-9-]+)(?:\|([^\]]+))?\]\]/g, (m, k, t) => A[k] ? '<a href="#' + k + '">' + (t || esc(A[k].title)) + '</a>' : (t || k));
+const plain = s => String(s).replace(/\[\[([a-z0-9-]+)(?:\|([^\]]+))?\]\]/g, (m, k, t) => t || k);
+
+/* ---------- views ---------- */
+function tableHtml(t) {
+  return '<div class="tablewrap"><table><thead><tr>' + t.head.map(h => '<th scope="col">' + esc(h) + '</th>').join("") + '</tr></thead><tbody>' +
+    t.rows.map(r => '<tr>' + r.map(c => '<td>' + md(c) + '</td>').join("") + '</tr>').join("") + '</tbody></table></div>';
+}
+
+function articleHtml(slug) {
+  const a = A[slug];
+  let h = '<p class="crumb"><a href="#main">Mishkat</a> / <a href="#category-' + a.cat + '">' + esc(CATS[a.cat]) + '</a></p>';
+  h += '<h1>' + esc(a.title) + '</h1>';
+  if (a.ar) h += '<p class="ar" lang="ar" dir="auto">' + a.ar + '</p>';
+  h += '<p class="from">From Mishkat Encyclopedia</p>';
+  h += '<aside class="info" aria-label="Summary of ' + esc(a.title) + '"><h2>' + esc(a.title) + '</h2><dl>' +
+    a.info.map(r => '<div><dt>' + esc(r[0]) + '</dt><dd>' + md(r[1]) + '</dd></div>').join("") + '</dl></aside>';
+  h += a.lead.map(p => '<p>' + md(p) + '</p>').join("");
+  if (a.sections.length >= 3) {
+    h += '<nav class="toc" aria-label="Contents"><b>Contents</b><ol>' +
+      a.sections.map((s, i) => '<li><button type="button" data-s="s' + i + '">' + esc(s.h) + '</button></li>').join("") + '</ol></nav>';
+  }
+  h += a.sections.map((s, i) => '<section id="s' + i + '"><h2>' + esc(s.h) + '</h2>' +
+    (s.p || []).map(p => '<p>' + md(p) + '</p>').join("") + (s.table ? tableHtml(s.table) : "") + '</section>').join("");
+  h += '<div class="after">';
+  if (a.see && a.see.length) {
+    h += '<h2>See also</h2><ul>' + a.see.filter(k => A[k]).map(k => '<li><a href="#' + k + '">' + esc(A[k].title) + '</a></li>').join("") + '</ul>';
+  }
+  h += '<div class="chips"><span>Topic:</span><a href="#category-' + a.cat + '">' + esc(CATS[a.cat]) + '</a></div></div>';
+  return h;
+}
+
+function listHtml(title, keys, kicker) {
+  return '<p class="crumb"><a href="#main">Mishkat</a> / ' + esc(kicker) + '</p><h1>' + esc(title) + '</h1>' +
+    '<p class="from">' + keys.length + (keys.length === 1 ? " article" : " articles") + '</p>' +
+    '<ul class="list">' + keys.map(k => '<li><a href="#' + k + '">' + esc(A[k].title) + '</a><p>' + esc(A[k].sum) + '</p></li>').join("") + '</ul>';
+}
+
+function hijriNow() {
+  try {
+    return new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", {day: "numeric", month: "long", year: "numeric"}).format(new Date());
+  } catch (e) { return ""; }
+}
+function gregNow() {
+  try {
+    return new Date().toLocaleDateString("en-GB", {weekday: "long", day: "numeric", month: "long", year: "numeric"});
+  } catch (e) { return ""; }
+}
+
+function mainHtml() {
+  const f = slugs[Math.floor(Date.now() / 864e5) % slugs.length];
+  const counts = {};
+  slugs.forEach(k => counts[A[k].cat] = (counts[A[k].cat] || 0) + 1);
+  const hj = hijriNow();
+  let h = '<h1>Mishkat Encyclopedia</h1><p class="ar" lang="ar" dir="auto">مشكاة</p><p class="from">A reference on Shia Islam, its history and its practice</p>';
+  h += '<p class="lede">Mishkat means a niche that holds a lamp, a word taken from the Light Verse of the Qur\'an (24:35). This encyclopedia gathers short, readable articles on the Ahl al-Bayt, the Imams, the events of Karbala and Ghadir, the main books and the rites of the Shia calendar.</p>';
+  h += '<div class="two"><div class="card featured"><p class="label">Featured article</p><h3><a href="#' + f + '">' + esc(A[f].title) + '</a></h3><p>' + esc(A[f].sum) + '</p><p><a href="#' + f + '">Read the article</a></p></div>';
+  h += '<div class="card today"><p class="label">Today</p><p class="gd">' + esc(gregNow()) + '</p>' + (hj ? '<p class="hd">' + esc(hj) + '</p>' : '') +
+    '<small>Hijri date by the Umm al-Qura calendar. Local moon sighting can differ by a day.</small></div></div>';
+  h += '<h2>Browse by topic</h2><div class="topics">' + Object.keys(CATS).map(c =>
+    '<a href="#category-' + c + '"><b>' + esc(CATS[c]) + '</b><span>' + esc(CATDESC[c]) + ' ' + (counts[c] || 0) + ' ' + ((counts[c] || 0) === 1 ? 'article' : 'articles') + '.</span></a>').join("") + '</div>';
+  h += '<h2>Key dates in the Shia calendar</h2>' + tableHtml({head: ["Date (Hijri)", "Observance"], rows: DATES});
+  h += '<p><a href="#all-articles">See all ' + slugs.length + ' articles</a></p>';
+  return h;
+}
+
+function notFound() {
+  return '<h1>Page not found</h1><p>There is no article with this address. Try the search box, or go to the <a href="#main">main page</a> or the <a href="#all-articles">list of all articles</a>.</p>';
+}
+
+function view(slug) {
+  if (slug === "main") return mainHtml();
+  if (slug === "all-articles") return listHtml("All articles", slugs.slice().sort((x, y) => A[x].title.localeCompare(A[y].title)), "All articles");
+  if (slug.indexOf("category-") === 0) {
+    const c = slug.slice(9);
+    if (CATS[c]) return listHtml(CATS[c], slugs.filter(k => A[k].cat === c), "Topics");
+  }
+  if (A[slug]) return articleHtml(slug);
+  return notFound();
+}
+
+/* ---------- routing ---------- */
+function route() {
+  const slug = (location.hash || "#main").slice(1) || "main";
+  $("page").innerHTML = view(slug);
+  document.querySelectorAll("#side a").forEach(el => {
+    const t = el.getAttribute("href").slice(1);
+    if (t === slug) el.setAttribute("aria-current", "page"); else el.removeAttribute("aria-current");
+  });
+  hideResults();
+  closeMenu();
+  window.scrollTo(0, 0);
+}
+
+function buildSide() {
+  const counts = {};
+  slugs.forEach(k => counts[A[k].cat] = (counts[A[k].cat] || 0) + 1);
+  $("catlist").innerHTML = Object.keys(CATS).map(c =>
+    '<li><a href="#category-' + c + '">' + esc(CATS[c]) + '<em>' + (counts[c] || 0) + '</em></a></li>').join("");
+}
+
+/* ---------- search ---------- */
+const idx = slugs.map(k => {
+  const a = A[k];
+  const body = plain(a.lead.join(" ") + " " + a.sections.map(s => (s.p || []).join(" ")).join(" ")).toLowerCase();
+  return {k: k, t: a.title.toLowerCase(), al: (a.aliases || []).join(" ").toLowerCase(), b: body};
+});
+function search(q) {
+  q = q.trim().toLowerCase();
+  if (!q) return [];
+  return idx.map(o => ({k: o.k, n: (o.t.indexOf(q) === 0 ? 5 : o.t.indexOf(q) > -1 ? 4 : 0) + (o.al.indexOf(q) > -1 ? 3 : 0) + (o.b.indexOf(q) > -1 ? 1 : 0)}))
+    .filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 7);
+}
+function hideResults() { const r = $("results"); r.hidden = true; r.innerHTML = ""; }
+function showResults() {
+  const q = $("q").value;
+  const hits = search(q);
+  const r = $("results");
+  if (!q.trim()) { hideResults(); return; }
+  r.innerHTML = hits.length
+    ? hits.map(x => '<li><a href="#' + x.k + '"><b>' + esc(A[x.k].title) + '</b><span>' + esc(CATS[A[x.k].cat]) + '. ' + esc(A[x.k].sum) + '</span></a></li>').join("")
+    : '<li class="none">No article matches “' + esc(q.trim()) + '”.</li>';
+  r.hidden = false;
+}
+$("q").addEventListener("input", showResults);
+$("q").addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    const hits = search($("q").value);
+    if (hits.length) { location.hash = "#" + hits[0].k; $("q").value = ""; $("q").blur(); }
+  } else if (e.key === "Escape") { hideResults(); }
+});
+document.addEventListener("click", e => {
+  if (!e.target.closest(".search")) hideResults();
+  const a = e.target.closest("#results a");
+  if (a) $("q").value = "";
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement && document.activeElement.tagName !== "INPUT") { e.preventDefault(); $("q").focus(); }
+});
+
+/* ---------- chrome ---------- */
+function closeMenu() { $("side").classList.remove("open"); $("menuBtn").setAttribute("aria-expanded", "false"); }
+$("menuBtn").addEventListener("click", () => {
+  const open = $("side").classList.toggle("open");
+  $("menuBtn").setAttribute("aria-expanded", open ? "true" : "false");
+});
+$("rand").addEventListener("click", () => {
+  const cur = (location.hash || "").slice(1);
+  let k = cur;
+  while (k === cur) k = slugs[Math.floor(Math.random() * slugs.length)];
+  location.hash = "#" + k;
+});
+$("page").addEventListener("click", e => {
+  const b = e.target.closest("button[data-s]");
+  if (b) { const el = document.getElementById(b.getAttribute("data-s")); if (el) el.scrollIntoView({behavior: "smooth", block: "start"}); }
+});
+
+function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); }
+try { const saved = localStorage.getItem("mishkat-theme"); if (saved === "dark" || saved === "light") applyTheme(saved); } catch (e) {}
+$("themeBtn").addEventListener("click", () => {
+  let cur = document.documentElement.getAttribute("data-theme");
+  if (!cur) cur = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  const next = cur === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try { localStorage.setItem("mishkat-theme", next); } catch (e) {}
+});
+
+buildSide();
+window.addEventListener("hashchange", route);
+route();
+</script>
+
+</body></html>
